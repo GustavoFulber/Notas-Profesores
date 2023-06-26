@@ -1,0 +1,10 @@
+flask
+mysql-connector-python
+flask_mysqldb
+flask-bootstrap
+email_validator
+flask-wtf
+flask_jwt_extended
+bcrypt
+flake8
+python-dotenv

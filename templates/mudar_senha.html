@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mudar Senha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    <div class="container py-5">
+        {% block content %}
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Mudar Senha</h1>
+
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <div class="alert alert-danger mt-4">
+                            <ul>
+                                {% for message in messages %}
+                                <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+
+                        <form action="/mudar_senha" method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="text" id="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="senha" class="form-label">Senha:</label>
+                                <input type="password" id="senha" name="senha" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirmar_senha" class="form-label">Confirmar Senha:</label>
+                                <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Mudar Senha</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

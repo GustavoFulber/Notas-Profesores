@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Editar Materia</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  <div class="container py-5">
+    {% block content %}
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-center mb-4">Editar Matéria</h1>
+            <form action="{{ url_for('editar_materia', materia_id=materia[0]) }}" method="post">
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ materia[1] }}" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="idresponsavel" class="form-label">Responsável:</label>
+                <select id="idresponsavel" name="idresponsavel" class="form-select" required>
+                  {% for responsavel in responsaveis %}
+                    <option value="{{ responsavel[0] }}" {% if responsavel[0] == materia[2] %}selected{% endif %}>{{ responsavel[1] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="idturma" class="form-label">ID Turma:</label>
+                <select id="idturma" name="idturma" class="form-select" required>
+                  {% for turma in turmas %}
+                    <option value="{{ turma[0] }}" {% if turma[0] == materia[3] %}selected{% endif %}>{{ turma[1] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Editar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</body>
+
+</html>

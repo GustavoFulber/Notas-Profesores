@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Editar Grupo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  <div class="container py-5">
+    {% block content %}
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-center mb-4">Editar Grupo</h1>
+            <form action="{{ url_for('editar_grupo', grupo_id=grupo[0]) }}" method="post">
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control" value="{{ grupo[1] }}" required>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</body>
+
+</html>

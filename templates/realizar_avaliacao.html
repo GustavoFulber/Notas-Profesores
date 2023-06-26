@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Realizar Avaliação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    {% block content %}
+    <div class="container py-5 px-4 px-sm-0">
+        <h1 class="fw-bold text-center">Realizar Avaliação</h1>
+        <p>
+        <form action="{{ url_for('realizar_avaliacao', idavaliacao=idavaliacao) }}" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 bg-white p-4 rounded shadow">
+
+        <div class="mb-3">
+            <label for="pComunicacao" class="form-label">Comunicação Oral e Escrita:</label>
+            <input type="text" class="form-control" id="pComunicacao" name="pComunicacao" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+        <div class="mb-3">
+            <label for="pCognitivo" class="form-label">Cognitivo:</label>
+            <input type="text" class="form-control" id="pCognitivo" name="pCognitivo" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+                    <div class="mb-3">
+                        <label for="pCognitivo" class="form-label">Cognitivo:</label>
+                        <input type="text" class="form-control" id="pCognitivo" name="pCognitivo" step="0.1" pattern="\d+(\.\d{1,2})?">
+                    </div>
+
+        <div class="mb-3">
+            <label for="pAutogestao" class="form-label">Autogestão:</label>
+            <input type="text" class="form-control" id="pAutogestao" name="pAutogestao" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+        <div class="mb-3">
+            <label for="pAutonomia" class="form-label">Autonomia:</label>
+            <input type="text" class="form-control" id="pAutonomia" name="pAutonomia" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+        <div class="mb-3">
+            <label for="pProtagonismo" class="form-label">Protagonismo:</label>
+            <input type="text" class="form-control" id="pProtagonismo" name="pProtagonismo" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+        <div class="mb-3">
+            <label for="pInteracao" class="form-label">Interação:</label>
+            <input type="text" class="form-control" id="pInteracao" name="pInteracao" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'">
+        </div>
+
+                    <div class="mb-3">
+                        <label for="pInteracao" class="form-label">Interação:</label>
+                        <input type="text" class="form-control" id="pInteracao" name="pInteracao" step="0.1" pattern="\d+(\.\d{1,2})?">
+                    </div>
+
+                    <div class="mb-3">
+                        <input class="btn btn-primary w-100 mb-2" type="submit" value="Realizar Avaliação">
+                        <button class="btn btn-danger w-100" type="button" onclick="location.href='{{ url_for('home') }}'">Voltar</button>
+                    </div>
+    
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endblock %}
+    
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>    

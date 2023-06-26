@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Adicionar Nota 360</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  <div class="container py-5">
+    <h1 class="fw-bold text-center">Adicionar Nota</h1>
+    <form action="{{ url_for('adicionar_nota_360', idAluno=idAluno, idgrupo=idgrupo, idmateria=idmateria) }}" method="POST">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 bg-white p-4 rounded shadow">
+          <div class="mb-3">
+            <label class="form-label" for="idtipo_avaliacao">Tipo de Avaliação:</label>
+            <select name="idtipo_avaliacao" id="idtipo_avaliacao" class="form-select">
+              {% for avaliacao in tipo_avaliacao %}
+              <option value="{{ avaliacao[0] }}">{{ avaliacao[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <h3>Habilidades</h3>
+
+          <div class="mb-3">
+            <label class="form-label" for="pComunicacao">Comunicação Oral e Escrita:</label>
+            <input type="text" id="pComunicacao" name="pComunicacao" step="0.1" pattern="\d+(\.\d{1,2})?"  title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="pCognitivo">Cognitivo:</label>
+            <input type="text" id="pCognitivo" name="pCognitivo" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" class="form-control">
+          </div>
+
+          <h3>Atitudes</h3>
+
+          <div class="mb-3">
+            <label class="form-label" for="pAutogestao">Autogestão:</label>
+            <input type="text" id="pAutogestao" name="pAutogestao" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="pAutonomia">Autonomia:</label>
+            <input type="text" id="pAutonomia" name="pAutonomia" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="pProtagonismo">Protagonismo:</label>
+			<input type="text" id="pProtagonismo" name="pProtagonismo" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" class="form-control">
+		</div>
+
+		<div class="mb-3">
+		  <label class="form-label" for="pInteracao">Interação:</label>
+		  <input type="text" id="pInteracao" name="pInteracao" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'"  class="form-control">
+		</div>
+
+		<div class="mb-3">
+		  <button type="submit" class="btn btn-primary">Adicionar Nota</button>
+		  <button type="button" class="btn btn-secondary" onclick="location.href='{{ url_for('ver_alunos_grupo', grupo_id=idgrupo, idmateria=idmateria) }}'">Voltar</button>
+		</div>
+	  </div>
+	</div>
+  </form>
+</div>
+{% endblock %}
+</body>
+
+</html>
+

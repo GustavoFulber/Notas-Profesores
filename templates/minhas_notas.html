@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Minhas Notas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  {% if notas_por_materia|length > 0 %}
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Minhas Notas</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Materia</th>
+                <th>Nota</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for materia_nota in notas_por_materia %}
+              <tr>
+                <td>{{ materia_nota.materia }}</td>
+                <td>{{ materia_nota.nota }}</td>
+                <td>
+                  <a href="{{ url_for('ver_notas_detalhadas', idmateria=materia_nota.idmateria) }}"
+                    class="btn btn-primary">Ver detalhes</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <br>
+  <br>
+    <div class="row justify-content-center px-4">
+        <div class="col-md-8 col-lg-6 text-center p-5 rounded bg-white shadow">
+            <h1 class="mb-4">Sem Notas Disponíveis</h1>
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+            <div class="d-flex justify-content-center">
+                <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_4DLPlW.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  loop  autoplay></lottie-player>
+            </div>
+        </div>
+    </div>
+  {% endif %}
+  {% endblock %}
+
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

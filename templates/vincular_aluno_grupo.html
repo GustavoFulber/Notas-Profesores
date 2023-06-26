@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Grupo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  <div class="container">
+    <h1 class="mt-4 mb-4">Vincular Aluno ao Grupo</h1>
+    <form action="{{ url_for('vincular_aluno_grupo', grupo_id=grupo_id, idmateria=idmateria) }}" method="POST">
+      <div class="mb-3">
+        <label for="aluno" class="form-label">Selecione o aluno:</label>
+        <select class="form-control" name="aluno" id="aluno">
+          {% for aluno in alunos %}
+          <option value="{{ aluno[0] }}">{{ aluno[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Vincular Aluno</button>
+    </form>
+  </div>
+  {% endblock %}
+
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

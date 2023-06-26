@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home">
+                <img src="{{ url_for('static', filename='img/logonavbar.png') }}" alt="Logo" width="30" height="30">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    {% if user_perfil == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gerenciar_alunos">Alunos</a>
+                    </li>
+                    {% endif %}
+                    {% if user_perfil == 'professor' or user_perfil == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/materia">Matérias</a>
+                    </li>
+                    {% endif %}
+                    {% if user_perfil == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/turma">Turmas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lista_usuario">Lista Usuários</a>
+                    </li>
+                    {% endif %}
+                    {% if user_perfil == 'aluno' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/minhas_notas">Meu Boletim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/minhas_avaliacoes">Realizar Avaliações</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mudar_senha">Mudar Senha</a>
+                    </li>
+                    {% if user_perfil == 'professor' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('static', filename='Manual_professor.pdf') }}" download="Manual de Ajuda.pdf">Ajuda</a>
+                    </li>
+                    {% endif %}
+                    {% if user_perfil == 'aluno' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('static', filename='Manual_aluno.pdf') }}" download="Manual de Ajuda.pdf">Ajuda</a>
+                    </li>
+                    {% endif %}
+                    {% if user_perfil == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('static', filename='Manual_administrador.pdf') }}" download="Manual de Ajuda.pdf">Ajuda</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">❌ Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 60px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

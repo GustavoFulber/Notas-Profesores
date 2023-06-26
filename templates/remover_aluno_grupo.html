@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Grupo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  <h1>Remover Aluno do Grupo</h1>
+  <form action="{{ url_for('remover_aluno_grupo', grupo_id=grupo_id, idmateria=idmateria) }}" method="POST">
+    <div class="form-group">
+      <label for="aluno">Selecione o aluno:</label>
+      <select class="form-control" name="aluno" id="aluno">
+        {% for aluno in alunos %}
+        <option value="{{ aluno[0] }}">{{ aluno[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Remover Aluno</button>
+  </form>
+  {% endblock %}
+</body>
+
+</html>

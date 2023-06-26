@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Adicionar Aluno</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-center mb-4">Vincular Usuário</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-danger mt-4">
+              <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+            <form method="post" action="{{ url_for('vincular_usuario', idAluno=idAluno) }}">
+              <div class="mb-3">
+                <label for="idusuario" class="form-label">Usuario:</label>
+                <select name="idusuario" id="idusuario" class="form-control" required>
+                  {% for usuario in usuarios %}
+                  <option value="{{ usuario[0] }}">{{ usuario[3] }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Vincular</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

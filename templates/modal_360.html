@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de alunos</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body>
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <p>Você tem certeza que deseja apagar esse item?</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-danger modal-button-sim">Sim</button>
+                    <button class="btn btn-secondary modal-button-nao">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const buttonSim = document.querySelector('.modal-button-sim');
+        const buttonNao = document.querySelector('.modal-button-nao');
+
+        buttonSim.addEventListener('click', () => {
+            const id360 = window.location.pathname.split('/').pop();
+            fetch('/deletar_360/' + id360, {
+                method: 'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    window.history.back();
+                } else {
+                    console.error('Erro ao deletar aluno');
+                }
+            });
+        });
+
+        buttonNao.addEventListener('click', () => {
+            window.history.back();
+        });
+
+        modal.style.display = 'block';
+    </script>
+</body>
+
+</html>

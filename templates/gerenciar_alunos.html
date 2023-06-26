@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Gerenciar Alunos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    {% block content %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Gerenciar Alunos</h1>
+            <button class="btn btn-primary" onclick="location.href='{{ url_for('adicionar_aluno') }}'">
+                <i class="fa fa-plus"></i> Adicionar Aluno
+            </button>
+        </div>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in alunos %}
+                <tr>
+                    <td>{{ aluno.nome }}</td>
+                    <td>{{ aluno.usuario }}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="location.href='{{ url_for('vincular_usuario', idAluno=aluno.idAluno) }}'">Vincular</button>
+                        <button class="btn btn-warning btn-sm" onclick="location.href='{{ url_for('desvincular_usuario', idAluno=aluno.idAluno) }}'">Desvincular</button>
+                        <button class="btn btn-primary btn-sm" onclick="location.href='{{ url_for('editar_aluno', idAluno=aluno.idAluno) }}'">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="location.href='{{ url_for('deletar_aluno', idAluno=aluno.idAluno) }}'">Deletar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

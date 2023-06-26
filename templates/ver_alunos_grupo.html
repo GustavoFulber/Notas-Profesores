@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Grupo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+  {% include "navbar.html" %}
+  {% include "toast.html" %}
+
+  {% block content %}
+  <div class="container">
+    <h1 class="mt-4 mb-4">Alunos do Grupo</h1>
+    <div class="d-flex mb-3">
+      <button class="btn btn-primary me-2"
+        onclick="location.href='{{ url_for('vincular_aluno_grupo', grupo_id=grupo_id, idmateria=idmateria) }}'">Vincular Aluno</button>
+      
+      <button class="btn btn-primary me-2"
+        onclick="location.href='{{ url_for('remover_aluno_grupo', grupo_id=grupo_id, idmateria=idmateria) }}'">Remover Aluno</button>
+
+      <button class="btn btn-primary"
+        onclick="location.href='{{ url_for('grupo', materia_id=idmateria) }}'">Voltar</button>
+    </div>
+    
+    <form action="{{ url_for('alterar_arredondamento', idmateria=idmateria, grupo_id=grupo_id) }}" method="post" class="d-flex align-items-center mb-3">
+      <label for="select" class="me-2">Arredondamento: </label>
+      <select id="select" name="valor" onchange="this.form.submit()" class="form-control custom-select me-2">
+        <option value="Automatico" {% if arrendodamento[2]=='Automatico' %}selected{% endif %}>Automatico</option>
+        <option value="Para mais" {% if arrendodamento[2]=='Para mais' %}selected{% endif %}>Para mais</option>
+        <option value="Para menos" {% if arrendodamento[2]=='Para menos' %}selected{% endif %}>Para menos</option>
+      </select>
+    </form>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Nota</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for aluno in alunos %}
+        <tr>
+          <td>{{ aluno[1] }}</td>
+          <td>{{ aluno[2] }}</td>
+          <td>
+            <button class="btn btn-info me-1" data-id="{{ aluno[0] }}"
+              onclick="location.href='{{ url_for('adicionar_nota', idAluno=aluno[0], idgrupo=grupo_id, idmateria=idmateria) }}'">Adicionar Nota</button>
+            <button class="btn btn-info me-1" data-id="{{ aluno[0] }}"
+              onclick="location.href='{{ url_for('adicionar_nota_360', idAluno=aluno[0], idgrupo=grupo_id, idmateria=idmateria) }}'">Adicionar Nota
+              360</button>
+            <button class="btn btn-secondary" data-id="{{ aluno[0] }}"
+              onclick="location.href='{{ url_for('detalhes', idAluno=aluno[0], idgrupo=grupo_id, idmateria=idmateria) }}'">Detalhes</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endblock %}
+
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

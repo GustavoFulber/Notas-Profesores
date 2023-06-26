@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro de Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "toast.html" %}
+
+    <div class="container py-5">
+        {% block content %}
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="img-fluid">
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Registro de Usuário</h1>
+
+                        <form method="post" action="{{ url_for('registro_usuario') }}">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome:</label>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input class="emailInput form-control" type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Usuário:</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                            </div>
+                        </form>
+
+                        <p class="text-center">Precisa verificar seu código? <a href="/verificar_codigo">Clique aqui</a></p>
+                        <p class="text-center">Já possui uma conta? <a href="/login">Clique aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

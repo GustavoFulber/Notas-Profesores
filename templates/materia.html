@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Materias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    {% block content %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Lista de Matérias</h1>
+            <button class="btn btn-primary" onclick="location.href='{{ url_for('adicionar_materia') }}'">
+                <i class="fa fa-plus"></i> Adicionar Matéria
+            </button>
+        </div>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Responsável</th>
+                    <th>Período</th>
+                    <th>Avaliações Criadas</th>
+                    <th>Avaliações Realizadas</th>
+                    <th>Auto Avaliações Criadas</th>
+                    <th>Auto Avaliações Realizadas</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for materia in materias %}
+                <tr>
+                    <td>{{ materia[1] }}</td>
+                    <td>{{ materia[2] }}</td>
+                    <td>{{ materia[3] }}</td>
+                    <td>{{ materia[4] }}</td>
+                    <td>{{ materia[5] }}</td>
+                    <td>{{ materia[6] }}</td>
+                    <td>{{ materia[7] }}</td>
+                    <td>
+                        {% if perfil == 'admin' %}
+                        <button class="btn btn-info btn-sm" data-id="{{ materia[0] }}"
+                            onclick="location.href='{{ url_for('grupo', materia_id=materia[0]) }}'">Grupos</button>
+                        <button class="btn btn-primary btn-sm" data-id="{{ materia[0] }}"
+                            onclick="location.href='{{ url_for('editar_materia', materia_id=materia[0]) }}'">Editar</button>
+                        <button class="btn btn-danger btn-sm" data-id="{{ materia[0] }}"
+                            onclick="location.href='{{ url_for('deletar_materia', materia_id=materia[0]) }}'">Deletar</button>
+                        {% endif %}
+                        {% if perfil == 'professor' %}
+                        <button class="btn btn-info btn-sm" data-id="{{ materia[0] }}"
+                            onclick="location.href='{{ url_for('grupo', materia_id=materia[0]) }}'">Grupos</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

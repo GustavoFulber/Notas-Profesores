@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Editar Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    {% block content %}
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Editar Perfil do Usuário</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="bg-white p-4 rounded shadow">
+                    <form action="{{ url_for('editar_usuario', usuario_id=usuario[0]) }}" method="POST">
+                        <div class="mb-3">
+                            <label for="perfil" class="form-label">Perfil:</label>
+                            <select name="perfil" id="perfil" class="form-select">
+                                <option value="aluno" {% if usuario[6] == 'aluno' %}selected{% endif %}>Aluno</option>
+                                <option value="admin" {% if usuario[6] == 'admin' %}selected{% endif %}>Administrador</option>
+                                <option value="professor" {% if usuario[6] == 'professor' %}selected{% endif %}>Professor</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

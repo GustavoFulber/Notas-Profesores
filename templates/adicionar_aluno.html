@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Adicionar Aluno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  </head>
+  <body style="background: var(--bs-gray-200);">
+  	{% include "navbar.html" %}
+	{% include "toast.html" %}
+
+	{% block content %}
+    <div class="container py-5">
+        <h1 class="fw-bold text-center">Adicionar Aluno</h1>
+        <form action="{{ url_for('adicionar_aluno') }}" method="POST">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 bg-white p-4 rounded shadow">
+              <div class="mb-3">
+                <label class="form-label" for="nome">Nome Completo</label>
+                <input class="form-control" type="text" id="nome" name="nome" placeholder="ex: Miguel Silva">
+              </div>
+              <input class="btn btn-primary w-100 mb-2" type="submit" value="Adicionar">
+              <button class="btn btn-danger w-100" type="button" onclick="location.href='{{ url_for('home') }}'">Voltar</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  {% endblock %}
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  </body>
+</html>

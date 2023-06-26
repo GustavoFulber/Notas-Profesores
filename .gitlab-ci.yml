@@ -1,0 +1,73 @@
+image: python:3.11
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  MYSQL_HOST: "localhost"
+  MYSQL_PASSWORD: "root"
+  MYSQL_USER: "root" 
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+stages:
+  - flake
+  - isort
+  - bandit
+  - teste
+  - deploy
+  - migrations
+  
+flake:
+  stage: flake
+  image: python:3.11
+  script:
+    - pip install flake8
+    - flake8 .
+
+isort:
+  stage: isort
+  image: python:3.11
+  before_script:
+  - python --version
+  - pip install isort
+  script:
+    - isort . --check --diff
+
+bandit:
+  stage: bandit
+  image: python:3.11
+  script:
+    - pip install bandit
+    - find . -type f -name "*.py" ! -path "./tests/*" | xargs bandit
+
+teste:
+  stage: teste
+  script:
+    - python -m pip install -r requirements.txt
+    - python -m unittest discover
+
+deploy:
+  stage: deploy
+  script:
+    - export FLASK_ENV=production.env
+    - apt-get update -qy
+    - apt-get install -y sshpass
+    - sshpass -p $DEPLOY_PASSWORD scp -o stricthostkeychecking=no -r * $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+    - sshpass -p $DEPLOY_PASSWORD ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "export FLASK_ENV=production"
+    - sshpass -p $DEPLOY_PASSWORD ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "systemctl stop integrador"
+    - sshpass -p $DEPLOY_PASSWORD ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "systemctl start integrador"
+  only:
+    - main
+
+migrations:
+  stage: migrations
+  image: python:3.11
+  script:
+    - apt-get update -qy
+    - apt-get install -y default-mysql-client
+    - for sql_file in $(ls migrations/*.sql); do mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD < $sql_file; done
+  only:
+    - main
+  environment: production

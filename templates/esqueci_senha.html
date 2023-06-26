@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recuperação de Senha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "toast.html" %}
+
+    <div class="container py-5">
+        {% block content %}
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center mb-4">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="img-fluid">
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Esqueci a Senha</h1>
+                        <h4 class="text-center mb-4">Enviaremos um código de verificação pelo email</h4>
+
+                        <form action="/esqueci_senha" method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail:</label>
+                                <input type="text" id="email" name="email" class="form-control" required autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Enviar Código</button>
+                            </div>
+                        </form>
+
+                        <p class="text-center">Precisa verificar seu código? <a href="/verificar_codigo">Clique aqui</a></p>
+                        <p class="text-center">Lembrou a senha? <a href="/login">Entre aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

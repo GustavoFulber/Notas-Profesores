@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    <div class="container py-5">
+        {% block content %}
+            <img src="{{ url_for('static', filename='img/bpkedulogo.png') }}" class="mx-auto d-block w-25" alt="Biopark Educação">
+            <br>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-center">Total de Usuários</h5>
+                            <p class="text-center">{{ total_usuarios }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-center">Total de Avaliações Realizadas</h5>
+                            <p class="text-center">{{ total_avaliacoes_realizadas }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for i in range(4) %}
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-center">{{ chart_titles[i] }}</h5>
+                                <canvas id="chart-{{ i }}"></canvas>
+                                <div class="chart-legend" id="chart-legend-{{ i }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <script>
+                const chartsData = {{ charts_data|tojson|safe }};
+                const chartTitles = {{ chart_titles|tojson|safe }};
+
+                const options = {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    }
+                };
+
+                const colors = [
+                    'rgba(75, 192, 192)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(255, 99, 132)'
+                ];
+
+                for (let i = 0; i < 4; i++) {
+                    const ctx = document.getElementById('chart-' + i).getContext('2d');
+                    const chartLegend = document.getElementById('chart-legend-' + i);
+                    const chartType = 'doughnut';
+
+                    const data = {
+                        labels: ['Maior igual 9.0', 'Maior igual 7.0 e Menor que 9.0', 'Maior igual 4.0 e Menor que 7.0', 'Menor que 4.0'],
+                        datasets: [{
+                            label: chartTitles[i],
+                            data: chartsData[i],
+                            backgroundColor: colors,
+                            borderColor: colors.map(color => color.replace(')', ', 0.8)')),
+                            borderWidth: 1
+                        }]
+                    };
+
+                    const chart = new Chart(ctx, {
+                        type: chartType,
+                        data: data,
+                        options: options
+                    });
+
+                    let legendHtml = '<ul class="custom-legend">';
+                    const totalValue = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                    data.labels.forEach((label, index) => {
+                        const value = data.datasets[0].data[index];
+                        const percentage = ((value / totalValue) * 100).toFixed(2);
+                        legendHtml += `<li><span class="legend-color" style="background-color: ${colors[index]}"></span>${label} = ${value} (${percentage}%)</li>`;
+                    });
+                    legendHtml += '</ul>';
+                    chartLegend.innerHTML = legendHtml;
+                }
+            </script>
+        {% endblock %}
+    </div>
+</body>
+</html>

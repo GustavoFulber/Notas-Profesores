@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Adicionar Nota</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+	<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+</head>
+
+<body style="background: var(--bs-gray-200);">
+	{% include "navbar.html" %}
+	{% include "toast.html" %}
+
+	{% block content %}
+	<div class="container py-5">
+		<h1 class="fw-bold text-center">Adicionar Nota</h1>
+		<form action="{{ url_for('adicionar_nota', idAluno=idAluno, idgrupo=idgrupo, idmateria=idmateria) }}" method="POST">
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-8 col-lg-6 bg-white p-4 rounded shadow">
+					<div class="mb-3">
+						<label for="avaliacao_objetiva" class="form-label">Avaliação objetiva:</label>
+						<input type="text" class="form-control" id="avaliacao_objetiva" name="avaliacao_objetiva" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" >
+					</div>
+					<div class="mb-3">
+						<label for="avaliacao_dissertativa" class="form-label">Avaliação dissertativa:</label>
+						<input type="text" class="form-control" id="avaliacao_dissertativa" name="avaliacao_dissertativa" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" >
+					</div>
+					<div class="mb-3">
+						<label for="uas" class="form-label">Uas:</label>
+						<input type="text" class="form-control" id="uas" name="uas" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" >
+					</div>
+					<div class="mb-3">
+						<label for="entregas" class="form-label">Entrega:</label>
+						<input type="text" class="form-control" id="entregas" name="entregas" step="0.1" pattern="\d+(\.\d{1,2})?" title="Por favor, insira um número de 0 a 10 com casa decimal separada por '.'" >
+					</div>
+
+					<div class="mb-3">
+						<input type="submit" class="btn btn-primary" value="Adicionar Nota">
+						<button type="button" class="btn btn-secondary" onclick="location.href='{{ url_for('ver_alunos_grupo', grupo_id=idgrupo, idmateria=idmateria )}}'">
+							<i class="fa fa-chevron-left"></i> Voltar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+    <script>
+		function getCookie(name) {
+			let value = "; " + document.cookie;
+			let parts = value.split("; " + name + "=");
+			if (parts.length == 2) return parts.pop().split(";").shift();
+		}
+
+		let csrfToken = getCookie('csrf_access_token');
+
+			$.ajaxSetup({
+				beforeSend: function(xhr, settings) {
+					xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+				}
+			});
+			</script>
+			{% endblock %}
+		</body>
+		
+		</html>
+		

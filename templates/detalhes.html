@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de alunos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body style="background: var(--bs-gray-200);">
+    {% include "navbar.html" %}
+    {% include "toast.html" %}
+
+    {% block content %}
+    <div class="container mt-4">
+        <h2>Detalhes do aluno</h2>
+
+        <button type="button" class="btn btn-secondary mt-2 mb-2" onclick="location.href='{{ url_for('ver_alunos_grupo', grupo_id=idgrupo, idmateria=idmateria) }}'">
+            <i class="fa fa-chevron-left"></i> Voltar
+        </button>
+
+        <div class="mt-4">
+            <h4>Notas Gerais</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Avaliação Objetiva</th>
+                        <th>Avaliação Dissertativa</th>
+                        <th>UAS</th>
+                        <th>Entregas</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nota in notas_gerais %}
+                    <tr>
+                        <td>{{ nota[1] }}</td>
+                        <td>{{ nota[2] }}</td>
+                        <td>{{ nota[3] }}</td>
+                        <td>{{ nota[4] }}</td>
+                        <td>
+                            <button class="btn btn-danger me-1" data-id="{{ nota[0] }}"
+                                onclick="location.href='{{ url_for('deletar_gerais', idgerais=nota[0], idgrupo=idgrupo, idmateria=idmateria) }}'">Deletar</button>
+                            <button class="btn btn-info" data-id="{{ nota[0] }}"
+                                onclick="location.href='{{ url_for('editar_gerais', idgerais=nota[0], idgrupo=idgrupo, idmateria=idmateria) }}'">Editar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <h4>Avaliação 360</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tipo de Avaliação</th>
+                        <th>Comunicação</th>
+                        <th>Cognitivo</th>
+                        <th>Autogestão</th>
+                        <th>Autonomia</th>
+                        <th>Protagonismo</th>
+                        <th>Interação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for avaliacao in avaliacao_360 %}
+                    <tr>
+                        <td>{{ avaliacao[1] }}</td>
+                        <td>{{ avaliacao[2] }}</td>
+                        <td>{{ avaliacao[3] }}</td>
+                        <td>{{ avaliacao[4] }}</td>
+                        <td>{{ avaliacao[5] }}</td>
+                        <td>{{ avaliacao[6] }}</td>
+                        <td>{{ avaliacao[7] }}</td>
+                        <td>
+                            <button class="btn btn-danger me-1" data-id="{{ avaliacao[0] }}"
+                                onclick="location.href='{{ url_for('deletar_360', id360=avaliacao[0], idgrupo=idgrupo, idmateria=idmateria) }}'">Deletar</button>
+                            <button class="btn btn-info" data-id="{{ avaliacao[0] }}"
+                                onclick="location.href='{{ url_for('editar_360', id360=avaliacao[0], idgrupo=idgrupo, idmateria=idmateria) }}'">Editar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lista de alunos</title>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+	{% include "navbar.html" %}
+	{% include "toast.html" %}
+
+	{% block content %}
+	<div class="container">
+		<h1 class="mt-4 mb-4">Lista de alunos</h1>
+		<div class="d-flex mb-3">
+			<button class="btn btn-primary me-2" onclick="location.href='{{ url_for('adicionar_aluno') }}'">
+				<i class="fa fa-plus"></i> Adicionar Aluno
+			</button>
+			<form action="/alterar_arredondamento" method="post" class="d-flex align-items-center">
+				<label for="select" class="me-2">Arredondamento:</label>
+				<select id="select" name="valor" onchange="this.form.submit()" class="form-control custom-select me-2">
+					<option value="Automatico" {% if arrendodamento[2] == 'Automatico' %}selected{% endif %}>Automatico</option>
+					<option value="Para mais" {% if arrendodamento[2] == 'Para mais' %}selected{% endif %}>Para mais</option>
+					<option value="Para menos" {% if arrendodamento[2] == 'Para menos' %}selected{% endif %}>Para menos</option>
+				</select>
+			</form>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Nota</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for aluno in alunos %}
+				<tr>
+					<td>{{ aluno[1] }}</td>
+					<td>{{ aluno[2] }}</td>
+					<td>
+						<button class="btn btn-info me-1"
+							onclick="location.href='{{ url_for('editar_aluno', idAluno=aluno[0]) }}'">Editar</button>
+						<button class="btn btn-danger me-1"
+							onclick="location.href='{{ url_for('deletar_aluno', idAluno=aluno[0]) }}'">Deletar</button>
+						<button class="btn btn-secondary me-1" data-id="{{ aluno[0] }}"
+							onclick="location.href='{{ url_for('adicionar_nota', idAluno=aluno[0]) }}'">Adicionar Nota</button>
+							<button class="btn btn-secondary me-1" data-id="{{ aluno[0] }}"
+							onclick="location.href='{{ url_for('adicionar_nota_360', idAluno=aluno[0]) }}'">Adicionar Nota
+							360</button>
+						<button class="btn btn-secondary" data-id="{{ aluno[0] }}"
+							onclick="location.href='{{ url_for('detalhes', idAluno=aluno[0]) }}'">Detalhes</button>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endblock %}
+
+	<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

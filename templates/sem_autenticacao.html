@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tela de Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body style="background: var(--bs-gray-200);">
+    {% include "toast.html" %}
+
+    <div class="container py-5 px-4">
+        {% block content %}
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 text-center p-5 rounded bg-white shadow">
+                <h1 class="mb-4">Aguardando aprovação!</h1>
+                <h4 class="mb-4">Seu usuário está aguardando a aprovação! Aguarde um administrador aceitar sua solicitação.</h4>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_ubd7utcf.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  loop  autoplay></lottie-player>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

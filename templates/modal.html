@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de alunos</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+
+<body>
+  <div class="modal-overlay">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Você tem certeza que deseja apagar esse item?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="modal-button-sim">Sim</button>
+          <button type="button" class="btn btn-secondary" id="modal-button-nao">Não</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script>
+    const modal = document.querySelector('.modal-overlay');
+    const buttonSim = document.querySelector('#modal-button-sim');
+    const buttonNao = document.querySelector('#modal-button-nao');
+
+    buttonSim.addEventListener('click', () => {
+      const idAluno = window.location.pathname.split('/').pop();
+      fetch('/deletar_aluno/' + idAluno, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = '/';
+        } else {
+          console.error('Erro ao deletar aluno');
+        }
+      });
+    });
+
+    buttonNao.addEventListener('click', () => {
+      window.history.back();
+    });
+
+    modal.style.display = 'block';
+  </script>
+</body>
+
+</html>
